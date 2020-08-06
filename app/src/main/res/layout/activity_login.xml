@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:background="@color/colorAccent"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/icon"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75">
+
+        <TextView
+            android:id="@+id/tv_welcomeLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="Log in to Practice Apps"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            android:textSize="25sp"
+            android:fontFamily="@font/coolvetica"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"/>
+
+        <EditText
+            android:id="@+id/txt_login_username"
+            android:layout_below="@id/tv_welcomeLogin"
+            android:layout_margin="15dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:background="@drawable/custom_txt"
+            android:textColor="@android:color/black"/>
+
+        <EditText
+            android:id="@+id/txt_login_password"
+            android:layout_below="@id/txt_login_username"
+            android:layout_margin="15dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:background="@drawable/custom_txt"
+            android:textColor="@android:color/black"/>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:textColor="@android:color/white"
+            android:text="Login"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_below="@id/txt_login_password"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+</LinearLayout>
