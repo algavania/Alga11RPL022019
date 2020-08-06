@@ -1,18 +1,31 @@
 package com.practice.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText txt_login_username, txt_login_password;
     Button btn_login;
-    Preferences preferences;
+    TextView tv_register;
+    String email, password;
+    ProgressDialog progressDialog;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,28 +36,70 @@ public class LoginActivity extends AppCompatActivity {
         txt_login_username = findViewById(R.id.txt_login_username);
         txt_login_password = findViewById(R.id.txt_login_password);
         btn_login = findViewById(R.id.btn_login);
+        tv_register = findViewById(R.id.tv_register);
 
-        preferences = new Preferences();
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        progressDialog = new ProgressDialog(this);
+
+        tv_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                How to login:
-//                Username: user
+//                Test login:
+//                Email: test@gmail.com
 //                Password: password
-                if (!txt_login_password.getText().toString().equals("password") && !txt_login_username.getText().toString().equals("user")) {
-                    txt_login_username.setError("Wrong username");
-                    txt_login_password.setError("Wrong password");
-                } else if (!txt_login_username.getText().toString().equals("user") && txt_login_password.getText().toString().equals("password")) {
-                    txt_login_username.setError("Wrong username");
-                } else if (!txt_login_password.getText().toString().equals("password") && txt_login_username.getText().toString().equals("user")) {
-                    txt_login_password.setError("Wrong password");
+                email = txt_login_username.getText().toString();
+                password = txt_login_password.getText().toString();
+                if (password.isEmpty() && email.isEmpty()) {
+                    txt_login_username.setError("Fill the username");
+                    txt_login_password.setError("Fill the password");
+                } else if (!email.isEmpty() && password.isEmpty()) {
+                    txt_login_username.setError("Fill the password");
+                } else if (!password.isEmpty() && email.isEmpty()) {
+                    txt_login_password.setError("Fill the username");
+                } else if (password.length() < 6) {
+                    txt_login_password.setError("Password must be at least 6 characters");
                 } else {
-                    preferences.setLogin(getApplicationContext(), true);
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    loginUser();
                 }
+            }
+        });
+    }
+
+    private void loginUser() {
+        progressDialog.setMessage("Signing you in...");
+        progressDialog.show();
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
