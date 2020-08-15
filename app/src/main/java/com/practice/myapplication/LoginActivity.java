@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     String email, password;
     ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
+    Preferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,11 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         tv_register = findViewById(R.id.tv_register);
 
+        preferences = new Preferences();
+
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            preferences.setStatus(getApplicationContext(), true);
         }
 
         progressDialog = new ProgressDialog(this);
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if (task.isSuccessful()) {
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                             startActivity(intent);
                             finish();
                         } else {

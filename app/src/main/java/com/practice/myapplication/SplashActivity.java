@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
                 try {
                     // Thread will sleep for 3 seconds
                     sleep(3*1000);
-                    Intent i=new Intent(getBaseContext(), LoginActivity.class);
+                    Intent i=new Intent(getBaseContext(), ControlClass.class);
                     startActivity(i);
                     finish();
                 } catch (Exception e) {

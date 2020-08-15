@@ -5,41 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.9">
+        android:layout_height="wrap_content"
+        android:id="@+id/recycler_view"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recycler_view"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="0.1"
-        android:layout_marginBottom="15dp">
-
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button"
-            android:textColor="@android:color/white"
-            android:layout_gravity="center"
-            android:text="Logout"
-            android:textAllCaps="false"
-            android:layout_marginTop="15dp"
-            android:textStyle="bold"
-            android:textSize="25sp" />
-
-    </LinearLayout>
 
 </LinearLayout>
