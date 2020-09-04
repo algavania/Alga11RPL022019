@@ -1,9 +1,13 @@
-package com.practice.myapplication;
+package com.practice.myapplication.model;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
+import com.practice.myapplication.ui.DashboardActivity;
+import com.practice.myapplication.ui.LoginActivity;
 
 public class ControlClass extends AppCompatActivity {
 
@@ -17,10 +21,11 @@ public class ControlClass extends AppCompatActivity {
 
         if (preferences.getStatus(getApplicationContext())) {
             startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
-            finish();
+            Log.d("Dashboard", "yes");
         } else {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-            finish();
+            Log.d("Login", "yes");
         }
+        finish();
     }
 }

@@ -1,9 +1,12 @@
-package com.practice.myapplication;
+package com.practice.myapplication.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.practice.myapplication.model.ControlClass;
+import com.practice.myapplication.R;
 
 public class SplashActivity extends AppCompatActivity {
 

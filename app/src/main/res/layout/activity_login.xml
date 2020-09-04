@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".ui.LoginActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -64,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
+            android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:background="@drawable/custom_txt"
             android:textColor="@android:color/black"/>

@@ -1,4 +1,4 @@
-package com.practice.myapplication;
+package com.practice.myapplication.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
