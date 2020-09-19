@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,6 +91,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.UserViewHolder
         });
         Picasso.get().load(dataList.get(position).getImageUrl())
                 .placeholder(R.drawable.icon)
+                .fit()
                 .into(holder.img_listImage);
     }
 
@@ -103,6 +105,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.UserViewHolder
         private TextView tv_listDescription;
         private ImageView img_listImage;
         private ImageView img_favorite;
+        private RelativeLayout relativeLayout;
 
         public UserViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -111,6 +114,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.UserViewHolder
             tv_listDescription = itemView.findViewById(R.id.tv_listDescription);
             img_favorite = itemView.findViewById(R.id.img_favorite);
             img_listImage = itemView.findViewById(R.id.img_listImage);
+            relativeLayout = itemView.findViewById(R.id.relative_layout);
+
+            relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 

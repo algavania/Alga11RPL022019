@@ -7,15 +7,17 @@ public class ItemProperty extends RealmObject implements Comparable{
 
     @PrimaryKey
     private Integer id;
-    private String title, imageUrl, description;
+    private String title, imageUrl, description, releaseDate, voteAverage;
     private Boolean isFavorite;
 
-    public ItemProperty(Integer id, String imageUrl, String title, String description, Boolean isFavorite){
+    public ItemProperty(Integer id, String imageUrl, String title, String description, String releaseDate, String voteAverage, Boolean isFavorite){
         this.id = id;
         this.imageUrl = imageUrl;
         this.title = title;
         this.description = description;
         this.isFavorite = isFavorite;
+        this.releaseDate = releaseDate;
+        this.voteAverage = voteAverage;
     }
 
     public ItemProperty() {
@@ -31,7 +33,7 @@ public class ItemProperty extends RealmObject implements Comparable{
     }
 
     public String getTitle() {
-        return title;
+         return title;
     }
 
     public void setTitle(String title) {
@@ -60,6 +62,22 @@ public class ItemProperty extends RealmObject implements Comparable{
 
     public void setFavorite(Boolean favorite) {
         isFavorite = favorite;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public String getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(String voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
     @Override

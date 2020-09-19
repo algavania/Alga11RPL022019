@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,11 +44,12 @@ public class MainActivity extends AppCompatActivity {
     private ItemAdapter adapter;
     private List<ItemProperty> arrayList;
     final String API_KEY = "a008cc3d5b543d48437262c1d83800ec";
-    String imageUrl, title, description;
+    String imageUrl, title, description, releaseDate, voteAverage;
     ProgressBar progressBar;
     Realm realm;
     RealmHelper realmHelper;
     Preferences preferences;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         RealmConfiguration configuration = new RealmConfiguration.Builder().build();
         realm = Realm.getInstance(configuration);
+
+        swipeRefreshLayout = findViewById(R.id.swipe_layout);
 
         realmHelper = new RealmHelper(realm);
 
@@ -87,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
                                 title = resultObj.getString("title");
                                 description = resultObj.getString("overview");
                                 imageUrl = "https://image.tmdb.org/t/p/w500/".concat(resultObj.getString("poster_path"));
-                                arrayList.add(new ItemProperty(i, imageUrl, title, description, false));
+                                voteAverage = resultObj.getString("vote_average");
+                                releaseDate = resultObj.getString("release_date");
+                                arrayList.add(new ItemProperty(i, imageUrl, title, description, releaseDate, voteAverage, false));
                                 final RealmResults<ItemProperty> model = realm.where(ItemProperty.class).equalTo("description", description).findAll();
                                 if (!model.isEmpty()) {
                                     arrayList.get(i).setFavorite(true);
@@ -102,7 +110,37 @@ public class MainActivity extends AppCompatActivity {
                             recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setAdapter(adapter);
-                            Log.d("Recycler:", "yes");
+
+                            adapter.setOnItemClickListener(new ItemAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                                    intent.putExtra("title", arrayList.get(position).getTitle());
+                                    intent.putExtra("id", arrayList.get(position).getId());
+                                    intent.putExtra("description", arrayList.get(position).getDescription());
+                                    intent.putExtra("imageUrl", arrayList.get(position).getImageUrl());
+                                    intent.putExtra("vote", arrayList.get(position).getVoteAverage());
+                                    intent.putExtra("date", arrayList.get(position).getReleaseDate());
+                                    intent.putExtra("favorite", arrayList.get(position).getFavorite());
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+
+                            swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent), getResources().getColor(R.color.colorPrimary));
+                            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                                @Override
+                                public void onRefresh() {
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            swipeRefreshLayout.setRefreshing(false);
+                                            arrayList.clear();
+                                            addData();
+                                        }
+                                    }, 2000);
+                                }
+                            });
                         } catch (Exception e) {
                             Log.d("Error: ", e.toString());
                         }

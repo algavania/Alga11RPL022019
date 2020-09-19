@@ -110,6 +110,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.UserVi
         });
         Picasso.get().load(dataList.get(position).getImageUrl())
                 .placeholder(R.drawable.icon)
+                .fit()
                 .into(holder.img_listImage);
     }
 

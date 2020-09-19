@@ -49,7 +49,7 @@ public class RealmHelper {
     }
 
     public List delete(ItemProperty itemProperty){
-        final RealmResults<ItemProperty> model = realm.where(ItemProperty.class).equalTo("id", itemProperty.getId()).findAll();
+        final RealmResults<ItemProperty> model = realm.where(ItemProperty.class).equalTo("description", itemProperty.getDescription()).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

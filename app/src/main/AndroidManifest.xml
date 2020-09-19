@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.FavoriteActivity"></activity>
+        <activity android:name=".ui.DetailActivity"></activity>
+        <activity android:name=".ui.FavoriteActivity" />
         <activity android:name=".ui.DashboardActivity" />
         <activity android:name=".model.ControlClass" />
         <activity
