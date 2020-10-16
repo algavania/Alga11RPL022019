@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -124,6 +125,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.UserVi
         private TextView tv_listDescription;
         private ImageView img_listImage;
         private ImageView img_favorite;
+        private RelativeLayout relativeLayout;
 
         public UserViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -132,6 +134,19 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.UserVi
             tv_listDescription = itemView.findViewById(R.id.tv_listDescription);
             img_favorite = itemView.findViewById(R.id.img_favorite);
             img_listImage = itemView.findViewById(R.id.img_listImage);
+            relativeLayout = itemView.findViewById(R.id.relative_layout);
+
+            relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 

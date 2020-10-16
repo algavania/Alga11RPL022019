@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.practice.myapplication.R;
 import com.practice.myapplication.RealmHelper;
 import com.practice.myapplication.adapter.FavoriteAdapter;
+import com.practice.myapplication.adapter.ItemAdapter;
 import com.practice.myapplication.model.ItemProperty;
 import com.practice.myapplication.model.Preferences;
 
@@ -80,6 +82,21 @@ public class FavoriteActivity extends AppCompatActivity {
         if (!arrayList.isEmpty()) {
             tv_noFavorite.setVisibility(View.INVISIBLE);
         }
+
+        adapter.setOnItemClickListener(new FavoriteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(getApplicationContext(), FavoriteDetailActivity.class);
+                intent.putExtra("title", arrayList.get(position).getTitle());
+                intent.putExtra("id", arrayList.get(position).getId());
+                intent.putExtra("description", arrayList.get(position).getDescription());
+                intent.putExtra("imageUrl", arrayList.get(position).getImageUrl());
+                intent.putExtra("vote", arrayList.get(position).getVoteAverage());
+                intent.putExtra("date", arrayList.get(position).getReleaseDate());
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
