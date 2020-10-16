@@ -298,6 +298,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.UserVi
             actionMode = null;
             multiSelect = false;
             selectedItems.clear();
+            isCAB = false;
             notifyDataSetChanged();
         }
     };
