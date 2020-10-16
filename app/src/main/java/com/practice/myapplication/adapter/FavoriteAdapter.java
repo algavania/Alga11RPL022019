@@ -14,7 +14,6 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
@@ -49,6 +48,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.UserVi
     private ActionMode actionMode;
     private boolean multiSelect = false;
     boolean isAll = false;
+    boolean isCAB = false;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -117,7 +117,10 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.UserVi
         holder.img_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteItem(position);
+                Log.d("isCAB", ""+isCAB);
+                if (!isCAB) {
+                    deleteItem(position);
+                }
             }
         });
     }
@@ -171,6 +174,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.UserVi
                     }
                     actionMode = ((AppCompatActivity) view.getContext()).startSupportActionMode(actionModeCallback);
                     selectItem(value);
+                    isCAB = true;
                     return true;
                 }
             });
@@ -186,6 +190,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.UserVi
                         actionMode.finish();
                         actionMode = null;
                         multiSelect = false;
+                        isCAB = false;
                         selectedItems.clear();
                         notifyDataSetChanged();
                     } else {
@@ -206,6 +211,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.UserVi
                 }
             } else {
                 relativeList.setBackgroundColor(Color.WHITE);
+                isCAB = false;
             }
         }
     }
