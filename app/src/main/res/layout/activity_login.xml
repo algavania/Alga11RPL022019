@@ -93,6 +93,27 @@
             android:layout_below="@id/tv_register"
             android:layout_centerHorizontal="true" />
 
+        <TextView
+            android:id="@+id/tv_or"
+            android:text="Or"
+            android:layout_below="@id/btn_login"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/coolvetica"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btn_google"
+            android:layout_below="@id/tv_or"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
     </RelativeLayout>
 
 </LinearLayout>
