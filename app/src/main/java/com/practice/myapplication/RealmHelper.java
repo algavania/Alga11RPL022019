@@ -43,6 +43,34 @@ public class RealmHelper {
         });
     }
 
+    public void update(final String formerDescription, final String imageUrl, final String title, final String description, final String releaseDate, final String voteAverage){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                ItemProperty model = realm.where(ItemProperty.class)
+                        .equalTo("description", formerDescription)
+                        .findFirst();
+                Log.d("title", model.getTitle());
+                model.setImageUrl(imageUrl);
+                model.setDescription(description);
+                model.setTitle(title);
+                model.setReleaseDate(releaseDate);
+                model.setVoteAverage(voteAverage);
+                Log.d("test", "success");
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                Log.e("pppp", "onSuccess: Update Successfully");
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
     public List<ItemProperty> getAllMovies() {
         RealmResults<ItemProperty> results = realm.where(ItemProperty.class).findAll();
         return results;

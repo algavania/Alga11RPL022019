@@ -5,18 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.practice.myapplication.R;
 import com.practice.myapplication.RealmHelper;
-import com.practice.myapplication.model.ItemProperty;
-import com.practice.myapplication.model.Preferences;
 import com.squareup.picasso.Picasso;
 
 import io.realm.Realm;
@@ -26,7 +22,6 @@ public class FavoriteDetailActivity extends AppCompatActivity {
 
     Realm realm;
     RealmHelper realmHelper;
-    Preferences preferences;
     Bundle extras;
     int id;
     String imageUrl, title, description, releaseDate, voteAverage;
@@ -39,8 +34,6 @@ public class FavoriteDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favorite_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        preferences = new Preferences();
 
         RealmConfiguration configuration = new RealmConfiguration.Builder().build();
         realm = Realm.getInstance(configuration);
@@ -77,6 +70,28 @@ public class FavoriteDetailActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), FavoriteActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.edit_menu, menu);
+        MenuItem editItem = menu.findItem(R.id.btn_edit);
+        editItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(getApplicationContext(), FavoriteEditActivity.class);
+                intent.putExtra("title", title);
+                intent.putExtra("description", description);
+                intent.putExtra("vote", voteAverage);
+                intent.putExtra("date", releaseDate);
+                intent.putExtra("imageUrl", imageUrl);
+                startActivity(intent);
+                finish();
+                return true;
+            }
+        });
+        return true;
     }
 
     @Override

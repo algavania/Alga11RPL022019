@@ -181,7 +181,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                adapter.getFilter().filter(s);
+                try {
+                    adapter.getFilter().filter(s);
+                } catch (Exception e) {
+                    Log.d("error", ""+e.toString());
+                }
                 return false;
             }
         });
